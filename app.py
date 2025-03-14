@@ -394,15 +394,20 @@ with gr.Blocks(
         <li><strong>Preview:</strong>  Your uploaded images will appear in the gallery on the left.</li>
         <li><strong>Reconstruct:</strong> Click the "Reconstruct" button to start the 3D reconstruction process.</li>
         <li><strong>Visualize:</strong>  The 3D reconstruction will appear in the viewer on the right.  You can rotate, pan, and zoom to explore the model, and download the GLB file. Note the visualization of 3D points may be slow for large number of input images. </li>
-        <li><strong>Adjust Visualization (Optional):</strong> After reconstruction, you can fine-tune the visualization using the options below:
-            <ul>
-                <li><em>Confidence Threshold:</em>  Adjusts the filtering of points based on the model's confidence.  Higher values show only the most confident points.</li>
-                <li><em>Show Points from Frame:</em> Select specific frames to display in the point cloud.  Useful for isolating parts of a scene.</li>
-                <li><em>Show Camera:</em> Toggle the display of the estimated camera positions.</li>
-                <li><em>Filter Sky / Filter Black Background:</em>  These options attempt to remove points corresponding to the sky or black backgrounds.</li>
-                <li><em>Select a Prediction Mode:</em> Choose between "Depthmap and Camera Branch" and "Pointmap Branch". They usually look similar, while "Depthmap and Camera Branch" give slightly better details.</li>
-            </ul>
-        </li>
+    <li>
+        <strong>Adjust Visualization (Optional):</strong>
+        After reconstruction, you can fine-tune the visualization using the options below 
+        <details style="display:inline;">
+        <summary style="display:inline;">(<strong>click to expand</strong>):</summary>
+        <ul>
+            <li><em>Confidence Threshold:</em> Adjust the filtering of points based on confidence.</li>
+            <li><em>Show Points from Frame:</em> Select specific frames to display in the point cloud.</li>
+            <li><em>Show Camera:</em> Toggle the display of estimated camera positions.</li>
+            <li><em>Filter Sky / Filter Black Background:</em> Remove sky or black-background points.</li>
+            <li><em>Select a Prediction Mode:</em> Choose between "Depthmap and Camera Branch" or "Pointmap Branch."</li>
+        </ul>
+        </details>
+    </li>
     </ol>
     <p><strong>Please note:</strong> Our method usually only needs less than 1 second to reconstruct a scene, but the visualization of 3D points may take tens of seconds, especially when the number of images is large. Please be patient or, for faster visualization, use a local machine to run our demo from our <a href="https://github.com/facebookresearch/vggt">GitHub repository</a>.</p>
     </div>
