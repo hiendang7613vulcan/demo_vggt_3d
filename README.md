@@ -8,7 +8,7 @@ sdk_version: 5.17.1
 app_file: app.py
 pinned: false
 license: cc-by-nc-4.0
-short_description: vggt (alpha test)
+short_description: VGGT (CVPR 2025)
 ---
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
