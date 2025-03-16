@@ -15,25 +15,27 @@ from datetime import datetime
 import glob
 import gc
 import time
-import spaces
+# import spaces
 
 
 sys.path.append("vggt/")
 
-from gradio_util import predictions_to_glb
+from visual_util import predictions_to_glb
 from vggt.models.vggt import VGGT
 from vggt.utils.load_fn import load_and_preprocess_images
 from vggt.utils.pose_enc import pose_encoding_to_extri_intri
 from vggt.utils.geometry import unproject_depth_map_to_point_map
 
+# device = "cuda" if torch.cuda.is_available() else "cpu"
 
 print("Initializing and loading VGGT model...")
 # model = VGGT.from_pretrained("facebook/VGGT-1B")  # another way to load the model
 
-# device = "cuda" if torch.cuda.is_available() else "cpu"
 model = VGGT()
 _URL = "https://huggingface.co/facebook/VGGT-1B/resolve/main/model.pt"
 model.load_state_dict(torch.hub.load_state_dict_from_url(_URL))
+
+
 model.eval()
 # model = model.to(device)
 
@@ -41,7 +43,7 @@ model.eval()
 # -------------------------------------------------------------------------
 # 1) Core model inference
 # -------------------------------------------------------------------------
-@spaces.GPU(duration=120)
+# @spaces.GPU(duration=120)
 def run_model(target_dir, model) -> dict:
     """
     Run the VGGT model on images in the 'target_dir/images' folder and return predictions.
@@ -181,7 +183,7 @@ def update_gallery_on_upload(input_video, input_images):
 # -------------------------------------------------------------------------
 # 4) Reconstruction: uses the target_dir plus any viz parameters
 # -------------------------------------------------------------------------
-@spaces.GPU(duration=120)
+# @spaces.GPU(duration=120)
 def gradio_demo(
     target_dir,
     conf_thres=3.0,
@@ -313,7 +315,7 @@ def update_visualization(
 # Example images
 # -------------------------------------------------------------------------
 
-canyon_video = "examples/videos/Studlagil_Canyon_East_Iceland.mp4"
+# canyon_video = "examples/videos/Studlagil_Canyon_East_Iceland.mp4"
 great_wall_video = "examples/videos/great_wall.mp4"
 colosseum_video = "examples/videos/Colosseum.mp4"
 room_video = "examples/videos/room.mp4"
@@ -392,9 +394,9 @@ with gr.Blocks(
 
     <h3>Getting Started:</h3>
     <ol>
-        <li><strong>Upload Your Data:</strong> Use the “Upload Video” or “Upload Images” buttons on the left to provide your input. Videos will be automatically split into individual frames (one frame per second).</li>
+        <li><strong>Upload Your Data:</strong> Use the "Upload Video" or "Upload Images" buttons on the left to provide your input. Videos will be automatically split into individual frames (one frame per second).</li>
         <li><strong>Preview:</strong> Your uploaded images will appear in the gallery on the left.</li>
-        <li><strong>Reconstruct:</strong> Click the “Reconstruct” button to start the 3D reconstruction process.</li>
+        <li><strong>Reconstruct:</strong> Click the "Reconstruct" button to start the 3D reconstruction process.</li>
         <li><strong>Visualize:</strong> The 3D reconstruction will appear in the viewer on the right. You can rotate, pan, and zoom to explore the model, and download the GLB file. Note the visualization of 3D points may be slow for a large number of input images.</li>
         <li>
         <strong>Adjust Visualization (Optional):</strong>
@@ -406,16 +408,15 @@ with gr.Blocks(
             <li><em>Show Points from Frame:</em> Select specific frames to display in the point cloud.</li>
             <li><em>Show Camera:</em> Toggle the display of estimated camera positions.</li>
             <li><em>Filter Sky / Filter Black Background:</em> Remove sky or black-background points.</li>
-            <li><em>Select a Prediction Mode:</em> Choose between “Depthmap and Camera Branch” or “Pointmap Branch.”</li>
+            <li><em>Select a Prediction Mode:</em> Choose between "Depthmap and Camera Branch" or "Pointmap Branch."</li>
             </ul>
         </details>
         </li>
     </ol>
-    <p><strong>Please note:</strong> Our method usually only needs less than 1 second to reconstruct a scene, but the visualization of 3D points may take tens of seconds, especially when the number of images is large. Please be patient or, for faster visualization, use a local machine to run our demo from our <a href="https://github.com/facebookresearch/vggt">GitHub repository</a>.</p>
+    <p><strong style="color: #0ea5e9;">Please note:</strong> <span style="color: #0ea5e9; font-weight: bold;">Our method usually only needs less than 1 second to reconstruct a scene, but the visualization of 3D points may take tens of seconds</span>, especially when the number of images is large. Please be patient or, for faster visualization, use a local machine to run our demo from our <a href="https://github.com/facebookresearch/vggt">GitHub repository</a>.</p>
     </div>
     """
     )
-
 
     target_dir_output = gr.Textbox(label="Target Dir", visible=False, value="None")
 
@@ -472,7 +473,7 @@ with gr.Blocks(
         [pyramid_video, "30", None, 35.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
         [single_cartoon_video, "1", None, 15.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
         [single_oil_painting_video, "1", None, 20.0, False, True, True, True, "Depthmap and Camera Branch", "True"],
-        [canyon_video, "14", None, 40.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
+        # [canyon_video, "14", None, 40.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
         [room_video, "8", None, 5.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
         [kitchen_video, "25", None, 50.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
         [fern_video, "20", None, 45.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
