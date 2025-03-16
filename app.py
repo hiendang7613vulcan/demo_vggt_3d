@@ -15,7 +15,7 @@ from datetime import datetime
 import glob
 import gc
 import time
-# import spaces
+import spaces
 
 
 sys.path.append("vggt/")
@@ -43,7 +43,7 @@ model.eval()
 # -------------------------------------------------------------------------
 # 1) Core model inference
 # -------------------------------------------------------------------------
-# @spaces.GPU(duration=120)
+@spaces.GPU(duration=120)
 def run_model(target_dir, model) -> dict:
     """
     Run the VGGT model on images in the 'target_dir/images' folder and return predictions.
@@ -183,7 +183,7 @@ def update_gallery_on_upload(input_video, input_images):
 # -------------------------------------------------------------------------
 # 4) Reconstruction: uses the target_dir plus any viz parameters
 # -------------------------------------------------------------------------
-# @spaces.GPU(duration=120)
+@spaces.GPU(duration=120)
 def gradio_demo(
     target_dir,
     conf_thres=3.0,
@@ -413,7 +413,7 @@ with gr.Blocks(
         </details>
         </li>
     </ol>
-    <p><strong style="color: #0ea5e9;">Please note:</strong> <span style="color: #0ea5e9; font-weight: bold;">Our method usually only needs less than 1 second to reconstruct a scene, but the visualization of 3D points may take tens of seconds</span>, especially when the number of images is large. Please be patient or, for faster visualization, use a local machine to run our demo from our <a href="https://github.com/facebookresearch/vggt">GitHub repository</a>.</p>
+    <p><strong style="color: #0ea5e9;">Please note:</strong> <span style="color: #0ea5e9; font-weight: bold;">Our model itself usually only needs less than 1 second to reconstruct a scene. However, visualizing 3D points may take tens of seconds due to third-party rendering, which are independent of VGGT's processing time. Please be patient or, for faster visualization, use a local machine to run our demo from our <a href="https://github.com/facebookresearch/vggt">GitHub repository</a>. </span></p>
     </div>
     """
     )
