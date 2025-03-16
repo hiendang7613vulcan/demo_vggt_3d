@@ -218,6 +218,10 @@ def gradio_demo(
     prediction_save_path = os.path.join(target_dir, "predictions.npz")
     np.savez(prediction_save_path, **predictions)
 
+    # Handle None frame_filter
+    if frame_filter is None:
+        frame_filter = "All"
+
     # Build a GLB file name
     glbfile = os.path.join(
         target_dir,
