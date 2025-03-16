@@ -472,7 +472,7 @@ with gr.Blocks(
         [colosseum_video, "22", None, 20.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
         [pyramid_video, "30", None, 35.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
         [single_cartoon_video, "1", None, 15.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
-        [single_oil_painting_video, "1", None, 20.0, False, True, True, True, "Depthmap and Camera Branch", "True"],
+        [single_oil_painting_video, "1", None, 20.0, False, False, True, True, "Depthmap and Camera Branch", "True"],
         # [canyon_video, "14", None, 40.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
         [room_video, "8", None, 5.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
         [kitchen_video, "25", None, 50.0, False, False, True, False, "Depthmap and Camera Branch", "True"],
