@@ -389,12 +389,12 @@ with gr.Blocks(
     """
     <h1>🏛️ VGGT: Visual Geometry Grounded Transformer</h1>
     <p>
-    <a href="https://github.com/facebookresearch/vggt">🐙 GitHub Repository</a> |
-    <a href="#">Project Page</a>
+    <a href="https://github.com/facebookresearch/vggt">🌟 GitHub Repository</a> |
+    <a href="https://vgg-t.github.io/">🚀 Project Page</a>
     </p>
 
     <div style="font-size: 16px; line-height: 1.5;">
-    <p>Upload a video or a set of images to create a 3D reconstruction of a scene or object. VGGT takes these images and generates a 3D point cloud, along with estimated camera poses.</p>
+    <p>Upload a video or a set of images to create a 3D reconstruction of a scene or object. VGGT takes these images and generates all key 3D attributes, including extrinsic and intrinsic camera parameters, point maps, depth maps, and 3D point tracks.</p>
 
     <h3>Getting Started:</h3>
     <ol>
