@@ -607,4 +607,4 @@ with gr.Blocks(
         outputs=[reconstruction_output, target_dir_output, image_gallery, log_output],
     )
 
-    demo.queue(max_size=20).launch(show_error=True, share=True)
+    demo.queue(max_size=20).launch(show_error=True, share=True, ssr_mode=False)
