@@ -1,69 +1,95 @@
 # Multi-view generation config for fal-ai/qwen-image-edit-2511-multiple-angles
-# All behavior is driven from this file.
-
-input:
-  # Path to the single input image (local file). Leave empty to use image_url.
-  image_path: ""
-  # Public URL to the input image (optional if image_path is set)
-  image_url: ""
-
-output:
-  # Output directory for generated views
-  dir: "outputs/multiview"
-  # Filename pattern. Available fields: base, name, h, v, i, ext
-  # Example: car_front_h0_v0_0.png
-  filename_pattern: "{base}_{name}_h{h}_v{v}_{i}.{ext}"
-  # When true, writes a manifest.json with run metadata
-  write_manifest: true
-  # Overwrite existing files if true
-  overwrite: false
-
-angles:
-  # If use_original_when_zero is true and h=0,v=0, the original image is copied
-  - name: "front"
-    horizontal: 0
-    vertical: 0
-  - name: "right"
-    horizontal: 90
-    vertical: 0
-  - name: "back"
-    horizontal: 180
-    vertical: 0
-  - name: "left"
-    horizontal: 270
-    vertical: 0
-
-use_original_when_zero: true
+# All behavior is driven from this file. Settings can be edited from Gradio UI.
 
 fal:
   model: "fal-ai/qwen-image-edit-2511-multiple-angles"
-  # API key is read from the environment variable below
-  api_key_env: "FAL_KEY"
-  # Optional: provide api_key here (not recommended)
-  # api_key: ""
-
+  # API key stored directly (editable from Gradio UI as password field)
+  api_key: ""
+  
   params:
     # Camera controls
     zoom: 5
-    horizontal_angle: null   # handled per-angle
-    vertical_angle: null     # handled per-angle
-
+    
     # Prompt controls
     additional_prompt: ""
     negative_prompt: ""
-
+    
     # Quality / sampling
     guidance_scale: 4.5
     num_inference_steps: 28
     acceleration: "regular"
     lora_scale: 1
-
+    
     # Output
     output_format: "png"
     num_images: 1
     sync_mode: false
     enable_safety_checker: true
-
+    
     # Optional
     seed: null
     image_size: null  # e.g. {"width": 1280, "height": 720} or "landscape_16_9"
+
+# Flat list of angles
+# Origin (0,0) uses original image - no API call needed when use_original_when_zero=true
+angles:
+  - name: "origin"
+    horizontal: 0
+    vertical: 0
+  # Ring 1: vertical=30
+  - name: "ring1_h0"
+    horizontal: 0
+    vertical: 30
+  - name: "ring1_h60"
+    horizontal: 60
+    vertical: 30
+  - name: "ring1_h120"
+    horizontal: 120
+    vertical: 30
+  # Ring 2: vertical=-30
+  - name: "ring2_h30"
+    horizontal: 30
+    vertical: -30
+  - name: "ring2_h90"
+    horizontal: 90
+    vertical: -30
+  - name: "ring2_h150"
+    horizontal: 150
+    vertical: -30
+
+use_original_when_zero: true
+
+# Preset configurations for the UI dropdown
+presets:
+  "2-Ring Orbit (7 views)":
+    - { name: "origin", horizontal: 0, vertical: 0 }
+    - { name: "ring1_h0", horizontal: 0, vertical: 30 }
+    - { name: "ring1_h60", horizontal: 60, vertical: 30 }
+    - { name: "ring1_h120", horizontal: 120, vertical: 30 }
+    - { name: "ring2_h30", horizontal: 30, vertical: -30 }
+    - { name: "ring2_h90", horizontal: 90, vertical: -30 }
+    - { name: "ring2_h150", horizontal: 150, vertical: -30 }
+  
+  "4-View Cardinal":
+    - { name: "front", horizontal: 0, vertical: 0 }
+    - { name: "right", horizontal: 90, vertical: 0 }
+    - { name: "back", horizontal: 180, vertical: 0 }
+    - { name: "left", horizontal: 270, vertical: 0 }
+  
+  "8-View Orbit":
+    - { name: "front", horizontal: 0, vertical: 0 }
+    - { name: "front_right", horizontal: 45, vertical: 0 }
+    - { name: "right", horizontal: 90, vertical: 0 }
+    - { name: "back_right", horizontal: 135, vertical: 0 }
+    - { name: "back", horizontal: 180, vertical: 0 }
+    - { name: "back_left", horizontal: 225, vertical: 0 }
+    - { name: "left", horizontal: 270, vertical: 0 }
+    - { name: "front_left", horizontal: 315, vertical: 0 }
+  
+  "6-View (Front + 5 angles)":
+    - { name: "front", horizontal: 0, vertical: 0 }
+    - { name: "front_right", horizontal: 60, vertical: 0 }
+    - { name: "right", horizontal: 120, vertical: 0 }
+    - { name: "back", horizontal: 180, vertical: 0 }
+    - { name: "left", horizontal: 240, vertical: 0 }
+    - { name: "front_left", horizontal: 300, vertical: 0 }
