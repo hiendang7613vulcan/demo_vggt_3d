@@ -142,3 +142,4 @@ dmypy.json
 # Folder specific to your needs
 **/tmp/
 **/outputs/skyseg.onnx
+**/outputs/multiview/
